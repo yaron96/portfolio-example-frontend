@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Category } from './Category'
+import { Category } from './category'
 
 export const ProductFilter = ({setFilter}) => {
     const [category, setCategory] = useState([])

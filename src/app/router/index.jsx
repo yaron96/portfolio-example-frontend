@@ -5,8 +5,10 @@ import { useIsAuthorized } from '../../entities/session'
 export const Router = () => {
     const isAuthorized = useIsAuthorized()
 
+
+    //delete ! .v.
     return (
-        isAuthorized
+        !isAuthorized
             ?
             <Routes>
                 {privateRoutes.map(route =>

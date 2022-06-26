@@ -19,7 +19,6 @@ export class HttpClientService {
     constructor() {
         const service = axios.create({
           headers: {
-            'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json; charset=utf-8',
           },
         });
@@ -42,6 +41,14 @@ export class HttpClientService {
         }
         return request;
     }
+
+    handleResponseSuccess = (response) => {
+      return response;
+    };
+
+    handleResponseError = (error) => {
+      return error;
+    };
 
     get(
       url,
