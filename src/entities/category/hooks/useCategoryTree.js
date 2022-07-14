@@ -1,41 +1,26 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { categoryApi } from "../../../shared/api/category";
-import { categoryKeys } from "../query-keys";
+import { categoryApi } from "shared/api/category";
+import { categoryKeys } from "entities/category/query-keys";
 import { useMoveCategory } from "./useMoveCategory";
 
 export const useCategoryTree = (isEditing, setSelected) => {
-    const [treeData, setTreeData] = useState({});
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [isDraggable, setIsDraggable] = useState(false);
     const [isSelectable, setIsSelectable] = useState(false);
 
-    const { data, isLoading } = useQuery(
-        categoryKeys.all,
-        () => categoryApi.getAll(),
-        { initialData: [] }
+    const initialData = {}
+    const { data, isLoading, isError } = useQuery(
+        categoryKeys.tree,
+        () => categoryApi.getTree(),
+        {
+            initialData: initialData,
+            onSuccess: initExpandedKeys,
+        }
     );
 
     const moveCategoryMutation = useMoveCategory()
-
-    //useMemo(())
-
-    useEffect(() => {
-        if (data.length) {
-            const copy = data.map((item) => {
-                return Object.assign({}, item);
-            });
-            setTreeData(arrToTree(copy));
-        }
-    }, [data]);
-
-    useEffect(() => {
-        if (treeData.children) {
-            const allKeys = getAllKeys(treeData.children);
-            setExpandedKeys(allKeys);
-        }
-    }, [treeData]);
 
     useEffect(() => {
         if (isEditing) {
@@ -49,7 +34,7 @@ export const useCategoryTree = (isEditing, setSelected) => {
 
     useEffect(() => {
         if (selectedKeys.length) {
-            setSelected(findById(selectedKeys.pop(), treeData));
+            setSelected(findById(selectedKeys.pop(), data));
         } else if (!isEditing) {
             setIsSelectable(false);
             setSelected(false);
@@ -68,16 +53,35 @@ export const useCategoryTree = (isEditing, setSelected) => {
         const dropPos = info.node.pos.split("-");
         const drop_pos =
             info.dropPosition - Number(dropPos[dropPos.length - 1]);
-
-        moveCategoryMutation.mutateAsync({
+        
+        return moveCategoryMutation.mutateAsync({
             drag_id,
             drop_id,
             drop_pos,
         })
     }
 
+    function onExpand(_, item) {
+        if(item.nativeEvent.type !== "dragenter") {
+            if (item.node.expanded) {
+                setExpandedKeys((arr) => arr.filter((e) => e !== item.node.key));
+            } else {
+                setExpandedKeys((arr) => [...arr, item.node.key]);
+            }
+        }
+    }
+
+    function initExpandedKeys(data) {
+        const allKeys = getAllKeys(data);
+        setExpandedKeys((arr) => {
+            if (arr.length) return arr;
+            else return allKeys;
+        });
+    }
+
     return {
-        treeData,
+        data: data ? data.children : initialData,
+        isError,
         isLoading,
         expandedKeys,
         selectedKeys,
@@ -85,38 +89,26 @@ export const useCategoryTree = (isEditing, setSelected) => {
         isSelectable,
         onSelect,
         onDrop,
+        onExpand,
     };
 };
 
-function arrToTree(arr) {
-    const rootNode = arr.find((item) => item.title === "root");
-    return initNode(rootNode);
-
-    function initNode(node) {
-        console.log(123)
-        node.children = node.children.map((id) => {
-            const child = arr.find((item) => item.id === id);
-            return initNode(child);
-        });
-        return node;
-    }
-}
-
-const getAllKeys = (nodesArr) => {
+const getAllKeys = (node) => {
     const result = [];
-    nodesArr.map((node) => {
-        let childKeys = [];
-        result.push(node.id);
-        if (node.children) {
-            childKeys = getAllKeys(node.children);
-        }
-        result.push(...childKeys);
-    });
+    result.push(node.id);
+
+    if (node.children.length) {
+        const childKeys = node.children.map((child) => getAllKeys(child));
+        childKeys.map((el) => {
+            result.push(...el);
+        });
+    }
+
     return result;
 };
 
-const findById = (id, treeData) => {
-    return find(id, treeData);
+const findById = (id, node) => {
+    return find(id, node);
 
     function find(id, node) {
         if (node.id == id) return node;

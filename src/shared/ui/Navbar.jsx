@@ -1,9 +1,24 @@
-import { useSelector } from 'react-redux'
-import styled from 'styled-components'
-import { LockOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
-import { AuthForm } from '../../widgets/auth/AuthForm.jsx'
-import { Dropdown } from 'antd'
+import { useUser } from "entities/session";
+import { Logout } from "features/auth/logout/ui.jsx";
+import { AuthForm } from "widgets/auth/AuthForm.jsx";
+import { Button, Dropdown } from "antd";
+import { LockOutlined } from "@ant-design/icons";
+import styled from "styled-components";
+
+export const Navbar = () => {
+
+    return (
+        <Styled className="navbar">
+            <div>
+                <Button>MAIN</Button>
+                <Button>HELP</Button>
+            </div>
+            <div>
+                <AuthNavbar />
+            </div>
+        </Styled>
+    );
+};
 
 const Styled = styled.div`
     height: 50px;
@@ -13,24 +28,31 @@ const Styled = styled.div`
     padding: 0 15px;
     background: lightsteelblue;
     justify-content: space-between;
-`
 
-export const Navbar = () => {
+    .authorized {
+        display: flex;
+        flex-direction: row;
+    }
+`;
+const AuthNavbar = () => {
+    const user = useUser();
+
     return (
-        <Styled className='navbar'>
-            <div>
-                <Button>MAIN</Button>
-                <Button>HELP</Button>
-            </div>
-            <div>
-                <Dropdown
-                    overlay={<AuthForm></AuthForm>}
-                >
-                    <Button>
-                        <LockOutlined>logout</LockOutlined>
-                    </Button>
-                </Dropdown>
-            </div>
-        </Styled>
-    )
-}
+        <div>
+            {user ? (
+                <div className="authorized">
+                    {user.email}
+                    <Logout />
+                </div>
+            ) : (
+                <div>
+                    <Dropdown overlay={<AuthForm />}>
+                        <Button>
+                            <LockOutlined /> Authorize
+                        </Button>
+                    </Dropdown>
+                </div>
+            )}
+        </div>
+    );
+};

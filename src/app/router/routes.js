@@ -1,5 +1,5 @@
-import { AdminPage } from '../../pages/admin'
-import { AuthPage } from '../../pages/auth'
+import { AdminPage } from 'pages/admin'
+import { AuthPage } from 'pages/auth'
 
 export const privateRoutes = [
     { path: '/admin', component: AdminPage }

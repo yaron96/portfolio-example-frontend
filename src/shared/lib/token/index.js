@@ -1,4 +1,4 @@
-import { API_URL } from '../config'
+import { API_URL } from "shared/lib/config"
 
 export class TokenStorage {
     static LOCAL_STORAGE_ACCESS_TOKEN = 'access_token'
@@ -34,11 +34,11 @@ export class TokenStorage {
     static storeToken(token) {
         localStorage.setItem(
         TokenStorage.LOCAL_STORAGE_ACCESS_TOKEN,
-        token.access_token,
+        token.accessToken,
     )
         localStorage.setItem(
             TokenStorage.LOCAL_STORAGE_REFRESH_TOKEN,
-            token.refresh_token,
+            token.refreshToken,
     )
   }
 

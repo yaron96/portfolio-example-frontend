@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ImageUtil } from '../../../shared/utils/ImageUtil'
+import { ImageUtil } from 'shared/utils/ImageUtil'
 import styled from 'styled-components'
 
 export const ListItemImage = ({image_id}) => {
@@ -9,7 +9,7 @@ export const ListItemImage = ({image_id}) => {
     useEffect(() => {
         if (image_id) {
             const isThumb = true
-            setUrl(ImageUtil.imagesGetUrl(image_id, isThumb))
+            setUrl(ImageUtil.getUrl(image_id, isThumb))
         }
     }, [image_id])
 

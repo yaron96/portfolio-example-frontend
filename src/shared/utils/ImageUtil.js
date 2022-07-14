@@ -1,8 +1,8 @@
 export class ImageUtil {
 
-    static imagesGetUrl(image_id, thumb = false) {
+    static getUrl(imageId, thumb = true) {
         const head = 'http://localhost:8081/image'
-        const tail = `/${image_id}`
+        const tail = `/${imageId}`
         if (!thumb) return head + tail
         else return head + '/thumb' + tail
     }

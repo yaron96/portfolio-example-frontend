@@ -5,7 +5,7 @@ export class FileService {
         return new Promise((resolve, reject) => {
             reader.onerror = () => {
                 reader.abort()
-                reject('file reader problem') // TODO
+                reject('file reader problem')
             }
             reader.onload = () => 
                 resolve(reader.result)

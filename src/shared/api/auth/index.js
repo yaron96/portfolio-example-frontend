@@ -1,15 +1,19 @@
-import { $api } from '../http-client'
+import { httpClient } from "shared/api/http-client"
 
-export class AuthService {
-    static async login(email, password) {
-        return $api.post('/login', {email, password})
-    }
+const registration = (params) => {
+    return httpClient.post("auth/registration", params);
+};
 
-    static async registration(email, password) {
-        return $api.post('/registration', {email, password})
-    }
+const login = (params) => {
+    return httpClient.post("auth/login", params);
+};
 
-    static async logout() {
-        return $api.post('/logout')
-    }
-}
+const logout = (params) => {
+    return httpClient.post("auth/logout", params);
+};
+
+export const authApi = {
+    registration,
+    login,
+    logout,
+};

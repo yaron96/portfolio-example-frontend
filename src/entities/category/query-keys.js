@@ -1,5 +1,5 @@
 export const categoryKeys = {
-    all: ['categories'],
-    details: () => [...categoryKeys.all, 'detail'],
+    tree: ['categories'],
+    details: () => [...categoryKeys.tree, 'detail'],
     detail: (id) => [categoryKeys.details(), id]
 }

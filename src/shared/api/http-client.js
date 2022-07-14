@@ -1,18 +1,6 @@
-import axios, { Axios } from 'axios'
-import { API_URL } from '../lib/config'
-import { TokenStorage } from '../lib/token'
-
-export const base_url = 'http://localhost:8081/'
-
-export const $api = axios.create({
-    withCredentials: true,
-    baseURL: base_url
-})
-
-$api.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
-    return config
-})
+import axios from 'axios'
+import { API_URL } from 'shared/lib/config';
+import { TokenStorage } from 'shared/lib/token';
 
 export class HttpClientService {
 

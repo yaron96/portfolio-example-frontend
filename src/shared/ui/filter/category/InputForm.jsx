@@ -25,6 +25,7 @@ export const InputForm = ({ input, func, onCancel }) => {
             <div className="buttons">
                 <Button
                     onClick={func}
+                    disabled={!input.get.length}
                     style={Object.assign({}, buttonStyle, { color: "#08c" })}
                 >
                     <PlusCircleOutlined style={iconStyle} />

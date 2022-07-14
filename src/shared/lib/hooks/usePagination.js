@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 export const usePagination = (params = {}) => {
@@ -12,10 +12,10 @@ export const usePagination = (params = {}) => {
     const setMeta = React.useCallback((meta) => {
         setPage(meta.page)
         setTake(meta.take)
-        setTotal(meta.itemCount)
+        setTotal(meta.total)
     }, [])
 
     const totalPages = Math.ceil(total / take)
 
-    return { page, take, setMeta, total, totalPages, setPage };
+    return { page, take, setMeta, total, totalPages, setPage, setTake };
 }

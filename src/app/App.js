@@ -1,7 +1,7 @@
-import { Container } from '../shared/ui/Container'
+import { Container } from 'shared/ui/Container'
 import { Router } from './router'
 import { MainProvider } from "./providers"
-import { Navbar } from '../shared/ui/Navbar'
+import { Navbar } from 'shared/ui/Navbar'
 import styled from 'styled-components'
 import 'antd/dist/antd.css'
 

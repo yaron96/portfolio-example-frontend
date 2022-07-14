@@ -1,4 +1,4 @@
-import { queryClient } from '../../shared/lib/query-client'
+import { queryClient } from 'shared/lib/query-client'
 import { QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 

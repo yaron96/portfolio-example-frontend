@@ -1,27 +1,27 @@
-import { httpClient } from '../http-client'
+import { httpClient } from "shared/api/http-client"
 
-const getAll = (params) => {
-    return httpClient.get('category', params)
+const getTree = (params) => {
+    return httpClient.get('product/category', params)
 }
 
 const update = (id, updates) => {
-    return httpClient.put(`category/${id}`, updates)
+    return httpClient.put(`product/category/${id}`, updates)
 }
 
 const create = (params) => {
-    return httpClient.post('category', params)
+    return httpClient.post('product/category', params)
 }
 
 const remove = (id) => {
-    return httpClient.delete(`category/${id}`)
+    return httpClient.delete(`product/category/${id}`)
 }
 
 const move = (id, params) => {
-    return httpClient.put(`category/${id}/move`, params)
+    return httpClient.put(`product/category/${id}/move`, params)
 }
 
 export const categoryApi = {
-    getAll,
+    getTree,
     create,
     remove,
     update,
