@@ -4,16 +4,21 @@ const getProducts = (params) => {
     return httpClient.get('product', params)
 }
 
-const createProduct = (params) => {
-    return httpClient.post('product', params)
+const createProduct = (draftId) => {
+    return httpClient.post(`product/${draftId}`)
 }
 
-const updateProduct = (params) => {
-    return httpClient.put('product', params)
+const updateProduct = (draftId) => {
+    return httpClient.put(`product/${draftId}`)
+}
+
+const deleteProduct = (productId) => {
+    return httpClient.delete(`product/${productId}`)
 }
 
 export const productApi = {
     getProducts,
     createProduct,
     updateProduct,
+    deleteProduct,
 }

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 export const useUpdateDelay = ({
     initialValue,
     updateFunc,
-    propertyName, 
+    propertyName,
     delayMs,
 }) => {
     const [value, setValue] = useState(initialValue);
@@ -14,21 +14,18 @@ export const useUpdateDelay = ({
         if (initialValue !== undefined) {
             setValue(initialValue);
         }
-    }, [initialValue])
+    }, [initialValue]);
 
     let timer;
     useEffect(() => {
         if (value) {
             if (isInitiated) {
-                setIsChanged(true);
-                timer = setTimeout(() => {
-                    if (value) {
-                        update();
-                    }
-                    setIsChanged(false);
-                }, delayMs);
-    
-                return () => clearTimeout(timer);
+                if (value !== initialValue) {
+                    setIsChanged(true);
+                    timer = setTimeout(update, delayMs);
+
+                    return () => clearTimeout(timer);
+                }
             } else {
                 setIsInitiated(true);
             }
@@ -38,6 +35,7 @@ export const useUpdateDelay = ({
     function update() {
         const obj = {};
         obj[propertyName] = value;
+        setIsChanged(false);
         updateFunc(obj);
     }
 
@@ -48,8 +46,7 @@ export const useUpdateDelay = ({
     function onMouseLeave() {
         clearTimeout(timer);
         if (isChanged) {
-            setIsChanged(false);
-            update()
+            update();
         }
     }
 

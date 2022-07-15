@@ -28,7 +28,7 @@ export const ListItem = ({product, onClick}) => {
         >
             <List.Item.Meta
                 title={product.title}
-                description={product.description}
+                description={product.description.slice(0, 200) + '...'}
             ></List.Item.Meta>
             <div className='price-row'>
                 <span>Price:</span>

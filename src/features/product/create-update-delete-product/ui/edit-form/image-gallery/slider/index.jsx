@@ -32,9 +32,14 @@ export const Slider = ({
 
     useEffect(() => {
         if (images) {
-            if (!selected) {
-                setSelected(images[0])
+            if (images.length) {
+                if (!selected) {
+                    setSelected(images[0] || '')
+                }
+            } else {
+                setSelected(false)
             }
+            
         }
     }, [images, id])
 

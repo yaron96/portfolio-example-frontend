@@ -1,16 +1,13 @@
-import styled from 'styled-components'
-import { Spin } from 'antd'
+import styled from "styled-components";
+import { Spin } from "antd";
 
 export const Loading = () => {
     return (
         <Styled>
-            <Spin
-                size='large'
-                tip='Loading...'
-            />
+            <Spin size="large" tip="Loading..." />
         </Styled>
-    )
-}
+    );
+};
 
 const Styled = styled.div`
     display: flex;
@@ -22,4 +19,4 @@ const Styled = styled.div`
     width: 100%;
     height: 100%;
     background: rgb(200 234 255 / 90%);
-`
+`;

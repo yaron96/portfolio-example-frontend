@@ -5,11 +5,7 @@ import { List, Pagination, Button } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 
-export const ProductList = ({
-    products,
-    pagination,
-    isLoading,
-}) => {
+export const ProductList = ({ products, pagination, isLoading }) => {
     const [isModal, setModal] = useState(false);
     const [selectedId, setSelected] = useState(false);
 
@@ -56,8 +52,8 @@ export const ProductList = ({
                         pageSize={pagination.take}
                         total={pagination.total}
                         onChange={(page, take) => {
-                            pagination.setPage(page)
-                            pagination.setTake(take)
+                            pagination.setPage(page);
+                            pagination.setTake(take);
                         }}
                         showSizeChanger
                         pageSizeOptions={[10, 20]}
@@ -65,7 +61,7 @@ export const ProductList = ({
                     />
                 </div>
             ) : (
-                <h1>no products</h1>
+                <h1>No products to show</h1>
             )}
         </Styled>
     );
